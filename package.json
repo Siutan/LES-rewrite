@@ -1,20 +1,20 @@
 {
-	"name": "app-name",
-	"productName": "App Name",
+	"name": "les-js",
+	"productName": "les-js",
 	"version": "0.0.0",
 	"description": "The best app ever",
 	"license": "MIT",
-	"repository": "sindresorhus/electron-boilerplate",
+	"repository": "",
 	"author": {
-		"name": "Your Name",
-		"email": "user@gmail.com",
-		"url": "https://sindresorhus.com"
+		"name": "Mukil CB",
+		"email": "mukil033@gmail.com"
 	},
 	"scripts": {
 		"postinstall": "electron-builder install-app-deps",
 		"lint": "xo",
 		"test": "npm run lint",
 		"start": "electron .",
+		"watch": "electron .",
 		"pack": "electron-builder --dir",
 		"dist": "electron-builder --macos --linux --windows",
 		"release": "np"

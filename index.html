@@ -2,17 +2,37 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Electron boilerplate</title>
-		<link rel="stylesheet" href="index.css">
+		<title>League Client Enhancements</title>
+		<link rel="stylesheet" href="styles/index.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script defer src="js/appFunctions.js"></script>
 	</head>
 	<body>
-		<div class="container">
-			<header>
-				<h1>Electron boilerplate</h1>
-				<p></p>
-			</header>
-			<section class="main"></section>
-			<footer></footer>
+		<div class="mainApp">
+			<div class="topBar">
+				<div class="titleBar">
+					<button id="showHideMenus" class="toggleButton"><em class=" fa fa-bars"></em></button>
+					<img src="static/app-icon.png" alt="app icon">
+					<div class="title">
+						This is the App
+					</div>
+				</div>
+				<div class="titleBarBtns">
+					<button id="minimizeBtn" class="topBtn titleBtn"><em class="fa fa-window-minimize"></em></button>
+					<button id="maximizeBtn" class="topBtn titleBtn"><em class="fa fa-window-maximize"></em></button>
+					<button id="closeAppBtn" class="topBtn titleBtn"><em class="fa fa-close"></em></button>
+				</div>
+			</div>
+			<div class="contentArea">
+				<div id="mysideBar" class="leftMenu">
+
+				</div>
+				<div class="contentPages">
+					<img src="static/img/color palette.png" alt="color palette">
+					<span>#011f4b • #03396c • #005b96 • #6497b1 • #b3cde0</span>
+				</div>
+			</div>
 		</div>
+
 	</body>
 </html>

@@ -50,8 +50,8 @@ if (!is.macos) {
 			type: 'separator'
 		},
 		aboutMenuItem({
-			icon: path.join(__dirname, 'static', 'icon.png'),
-			text: 'Created by Your Name'
+			icon: path.join(__dirname, 'static', 'app-icon.png'),
+			text: 'Created by Mukil CB'
 		})
 	);
 }
