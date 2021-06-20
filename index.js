@@ -1,7 +1,7 @@
 'use strict';
 const path = require('path');
 const {app, BrowserWindow, Menu} = require('electron');
-const { ipcMain } = require('electron');
+const {ipcMain} = require('electron');
 const ipc = ipcMain;
 /// const {autoUpdater} = require('electron-updater');
 const {is} = require('electron-util');
@@ -10,6 +10,10 @@ const debug = require('electron-debug');
 const contextMenu = require('electron-context-menu');
 const config = require('./config.js');
 const menu = require('./menu.js');
+
+const fs = require('fs')
+const psList = require('ps-list');
+const psNode = require('ps-node')
 
 unhandled();
 debug();
@@ -72,7 +76,7 @@ const createMainWindow = async () => {
 
 	// MAXIMIZE APP
 	ipc.on('maximizeRestoreApp', () => {
-		if (win.isMaximized()){
+		if (win.isMaximized()) {
 			console.log('restore btn clicked');
 			win.restore();
 		} else {
@@ -114,4 +118,30 @@ app.on('activate', async () => {
 	await app.whenReady();
 	Menu.setApplicationMenu(menu);
 	mainWindow = await createMainWindow();
+
+	let processes = await psList();
+	processes.filter(process => {
+		return process.name === 'LeagueClientUx.exe'
+	}).forEach(processInfo => {
+		console.log(processInfo)
+		psNode.lookup({pid: processInfo.pid}, (err, resultList) => {
+			if (err) {
+				throw new Error(err)
+			}
+			let process = resultList[0];
+			if (process) {
+				let cwd = process.command.replace("LeagueClientUx.exe", "");
+				let fileData = fs.readFileSync(`${cwd}lockfile`, 'utf8');
+				let data = fileData.split(":");
+				let processName = data[0]
+				let processId = data[1]
+				let port = data[2]
+				let password = new Buffer(`riot:${data[3]}`).toString('base64')
+				let protocol = data[4]
+			}else{
+				console.log("U suck harder")
+			}
+		})
+	})
+
 })();
