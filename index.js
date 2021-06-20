@@ -1,8 +1,8 @@
 'use strict';
 const path = require('path');
-const {app, BrowserWindow, Tray, Menu} = require('electron');
-const { ipcMain } = require('electron')
-const ipc = ipcMain
+const {app, BrowserWindow, Menu} = require('electron');
+const { ipcMain } = require('electron');
+const ipc = ipcMain;
 /// const {autoUpdater} = require('electron-updater');
 const {is} = require('electron-util');
 const unhandled = require('electron-unhandled');
@@ -56,33 +56,30 @@ const createMainWindow = async () => {
 		mainWindow = undefined;
 	});
 
-	
 	await win.loadFile(path.join(__dirname, 'index.html'));
 
-	//CLOSE APP
+	// CLOSE APP
 	ipc.on('closeApp', () => {
-		console.log('close btn clicked')
-		win.close()
-	})
+		console.log('close btn clicked');
+		win.close();
+	});
 
-	//MINIMIZE APP
+	// MINIMIZE APP
 	ipc.on('min', () => {
-		console.log('minimize btn clicked')
-		win.minimize()
-	})
+		console.log('minimize btn clicked');
+		win.minimize();
+	});
 
-	//MAXIMIZE APP
+	// MAXIMIZE APP
 	ipc.on('maximizeRestoreApp', () => {
 		if (win.isMaximized()){
-			console.log('restore btn clicked')
-			win.restore()
+			console.log('restore btn clicked');
+			win.restore();
 		} else {
-			console.log('maximize btn clicked')
-			win.maximize()
+			console.log('maximize btn clicked');
+			win.maximize();
 		}
-		
-	})
-
+	});
 	return win;
 };
 
@@ -96,7 +93,7 @@ app.on('second-instance', () => {
 		if (mainWindow.isMinimized()) {
 			mainWindow.restore();
 		}
-
+		
 		mainWindow.show();
 	}
 });

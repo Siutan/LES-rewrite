@@ -1,16 +1,16 @@
-const { ipcRenderer } = require('electron')
-const ipc = ipcRenderer
+const { ipcRenderer } = require('electron');
+const ipc = ipcRenderer;
 
-//CLOSE APP
+// CLOSE APP
 closeAppBtn.addEventListener('click', () => {
-    ipc.send('closeApp')
-})
+    ipc.send('closeApp');
+});
 
-//MINIMIZE APP
+// MINIMIZE APP
 minimizeBtn.addEventListener('click', () => {
-    ipc.send('min')
-})
-//MAXIMIZE APP
+    ipc.send('min');
+});
+// MAXIMIZE APP
 maximizeBtn.addEventListener('click', () => {
-    ipc.send('maximizeRestoreApp')
-})
+    ipc.send('maximizeRestoreApp');
+});
