@@ -36,10 +36,10 @@ const createMainWindow = async () => {
 	const win = new BrowserWindow({
 		title: app.name,
 		show: false,
-		width: 1200,
-		height: 600,
-		minWidth: 940,
-		minheight: 560,
+		width: 1280,
+		height: 720,
+		minWidth: 720,
+		minHeight: 480,
 		frame: false,
 		webPreferences: {
 			nodeIntegration: true,
@@ -93,7 +93,7 @@ app.on('second-instance', () => {
 		if (mainWindow.isMinimized()) {
 			mainWindow.restore();
 		}
-		
+
 		mainWindow.show();
 	}
 });
