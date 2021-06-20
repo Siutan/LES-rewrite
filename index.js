@@ -12,8 +12,7 @@ const config = require('./config.js');
 const menu = require('./menu.js');
 
 const fs = require('fs')
-const psList = require('ps-list');
-const psNode = require('ps-node')
+const find = require('find-process');
 
 unhandled();
 debug();
@@ -119,29 +118,19 @@ app.on('activate', async () => {
 	Menu.setApplicationMenu(menu);
 	mainWindow = await createMainWindow();
 
-	let processes = await psList();
-	processes.filter(process => {
-		return process.name === 'LeagueClientUx.exe'
-	}).forEach(processInfo => {
-		console.log(processInfo)
-		psNode.lookup({pid: processInfo.pid}, (err, resultList) => {
-			if (err) {
-				throw new Error(err)
-			}
-			let process = resultList[0];
-			if (process) {
-				let cwd = process.command.replace("LeagueClientUx.exe", "");
-				let fileData = fs.readFileSync(`${cwd}lockfile`, 'utf8');
-				let data = fileData.split(":");
-				let processName = data[0]
-				let processId = data[1]
-				let port = data[2]
-				let password = new Buffer(`riot:${data[3]}`).toString('base64')
-				let protocol = data[4]
-			}else{
-				console.log("U suck harder")
-			}
-		})
-	})
-
+	let processes = await find('name', 'LeagueClientUx.exe');
+	if (processes.length === 0) {
+		console.log("League is currently not running.")
+	} else {
+		let process = processes[0];
+		let cmd = process.cmd.split('"')[1]
+		let cwd = cmd.replace("LeagueClientUx.exe", "");
+		let fileData = fs.readFileSync(`${cwd}lockfile`, 'utf8');
+		let data = fileData.split(":");
+		let processName = data[0]
+		let processId = data[1]
+		let port = data[2]
+		let password = new Buffer(`riot:${data[3]}`).toString('base64')
+		let protocol = data[4]
+	}
 })();
