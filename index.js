@@ -13,8 +13,8 @@ const menu = require('./menu.js');
 
 const fs = require('fs')
 const find = require('find-process');
-
-const LeagueSession = require('/models/league-session');
+const LCUConnector = require('lcu-connector');
+const LeagueSession = require('./models/league-session.js');
 
 
 unhandled();
@@ -122,27 +122,16 @@ app.on('activate', async () => {
 	await app.whenReady();
 	Menu.setApplicationMenu(menu);
 	mainWindow = await createMainWindow();
-	startLeagueSearch();
+
+	const connector = new LCUConnector();
+	connector.on('connect', (data) => {
+		currentSession = new LeagueSession(data.protocol, data.address, data.port, data.username, data.password)
+	})
+
+	connector.on('disconnect', () => {
+		currentSession = null;
+	})
+
+	connector.start()
 })();
 
-
-function startLeagueSearch() {
-	let interval = setInterval(async () => {
-		if (currentSession == null) {
-			let processes = await find('name', 'LeagueClientUx.exe');
-			if (processes.length === 0) {
-				console.log("League is currently not running.")
-			} else {
-				let process = processes[0];
-				let cmd = process.cmd.split('"')[1]
-				let cwd = cmd.replace("LeagueClientUx.exe", "");
-				let fileData = fs.readFileSync(`${cwd}lockfile`, 'utf8');
-				let data = fileData.split(":");
-				let password = new Buffer(`riot:${data[3]}`).toString('base64')
-				currentSession = new LeagueSession(data[0], data[1], data[2], password, data[4])
-			}
-		} else {
-			clearInterval(interval)
-		}
-	}, 10000)
-}
