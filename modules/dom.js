@@ -4,7 +4,7 @@ class change {
   constructor() {
       this.autoacceptInt = false;
   }
-
+  
   updateProfile(summoner) {
     document.getElementById('profileImg').src = `http://ddragon.leagueoflegends.com/cdn/11.12.1/img/profileicon/${summoner.getIcon()}.png`;
     document.getElementById('profileUser').innerHTML = summoner.getNick();
@@ -21,6 +21,7 @@ class change {
     document.getElementById('statuss').value = summoner.getStatus();
   }
   
+  // Testing Purposes Only
   addAramEvent(api) {
     document.getElementById('aramBoost').addEventListener("click", () => {
         api.call("POST", "aramBoost");
@@ -75,12 +76,14 @@ class change {
     document.getElementById('loading').style = "display: none";
     document.getElementById('ploading').style = "display: none";
     document.getElementById('container').style = "";
+    document.getElementById('containerMatchHistory').style = "";
   }
 
   addLoader() {
     document.getElementById('loading').style = "";
     document.getElementById('ploading').style = "";
     document.getElementById('container').style = "display: none";
+    document.getElementById('containerMatchHistory').style = "display: none";
   }
 }
 

@@ -1,6 +1,6 @@
 'use strict';
 const path = require('path');
-const {app, BrowserWindow, Menu} = require('electron');
+const {app, electron, BrowserWindow, Menu} = require('electron');
 const {ipcMain} = require('electron');
 const ipc = ipcMain;
 /// const {autoUpdater} = require('electron-updater');
@@ -15,6 +15,8 @@ const fs = require('fs')
 const find = require('find-process');
 const LCUConnector = require('lcu-connector');
 const LeagueSession = require('./models/league-session.js');
+// Enable live reload for all the files inside project directory
+require('electron-reload')(__dirname);
 
 
 unhandled();
