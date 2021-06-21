@@ -6,6 +6,7 @@
 		<link rel="stylesheet" href="styles/index.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<script defer src="js/appFunctions.js"></script>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	</head>
 	<body>
 		<div class="mainApp">
@@ -28,8 +29,69 @@
 
 				</div>
 				<div class="contentPages">
-					<img src="static/img/color palette.png" alt="color palette">
-					<span>#011f4b • #03396c • #005b96 • #6497b1 • #b3cde0</span>
+						<div id="loading"></div>
+						<p id="ploading">Waiting for League client</p>
+						
+						<div style="display: none;" id="container">
+							<div id="profile">
+								<div id="preImg"><img id="profileImg"></div>
+								<div id="profileUser">Username</div>
+								<div id="preProfileLevel">
+									<div id="profileLevel">0</div>
+								</div>
+								<div style="margin: 0 30px;background: rgb(68 67 0);border-radius: 10px;">
+									<div id="profileXpLine"></div>
+								</div>
+								<div id="profileXp">
+									<div id="profileLastXp">0</div>/<div id="profileNextXp">0</div>
+								</div>
+								<div id="profileWallet">
+									<img style="top: 0; left: 0;" class="market" src="BE_icon.png">
+									<div style="top: -7px; left: 20px;" id="be">0</div>
+									<img style="top: 20px; left: 0;" class="market" src="RP_icon.png">
+									<div style="top: 14px; left: 20px;" id="rp">0</div>
+									<img style="top: 40px; left: 0;" class="market" src="OE_icon.png">
+									<div style="top: 34px; left: 20px;" id="oe">0</div>
+						
+									<img style="top: 0px; right: 0;" class="market" src="Rare_Gem.png">
+									<div style="top: -7px; right: 20px; text-align: right;" id="rg">0</div>
+									<img style="top: 20px; right: 0;" class="market" src="chest.png">
+									<div style="top: 14px; right: 20px; text-align: right;" id="ch">0</div>
+									<img style="top: 40px; right: 0;" class="market" src="key.png">
+									<div style="top: 34px; right: 20px; text-align: right;" id="ke">0</div>
+								</div>
+							</div>
+							<div id="line"></div>
+							<div id="content">
+								<h2>Profile</h2>
+								<div class="linee">
+									<select id="availability">
+										<option value="chat">Online</option>
+										<option value="away">Do Not Disturb</option>
+										<option value="mobile">Mobile</option>
+										<option value="offline">Offline</option>
+									</select>
+									<button id="saveavail">Save</button>
+								</div>
+								<div class="linee">
+									<input placeholder="Status" id="statuss" type="text">
+									<button id="savestatus" class="btnClass">Save</button>
+								</div>
+								<div class="linee">
+									<select id="iconn">
+										<option value="1">Default</option>
+										<option value="1625">Sakura</option>
+									</select>
+									<button id="saveicon" class="btnClass">Save</button>
+								</div>
+								<h2>Queues</h2>
+								<label class="switcher">
+									<input id="autoaccept" type="checkbox" />
+									<div class="switcher__indicator"></div><span>Auto accept</span>
+								</label>
+								<button id="aramBoost" class="btnClass">Aram boost</button>
+							</div>
+						</div>
 				</div>
 			</div>
 		</div>
