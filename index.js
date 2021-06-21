@@ -14,6 +14,9 @@ const menu = require('./menu.js');
 const fs = require('fs')
 const find = require('find-process');
 
+const LeagueSession = require('/models/league-session');
+
+
 unhandled();
 debug();
 contextMenu();
@@ -34,6 +37,8 @@ app.setAppUserModelId('com.company.AppName');
 
 // Prevent window from being garbage collected
 let mainWindow;
+
+let currentSession = null;
 
 const createMainWindow = async () => {
 	const win = new BrowserWindow({
@@ -117,20 +122,27 @@ app.on('activate', async () => {
 	await app.whenReady();
 	Menu.setApplicationMenu(menu);
 	mainWindow = await createMainWindow();
-
-	let processes = await find('name', 'LeagueClientUx.exe');
-	if (processes.length === 0) {
-		console.log("League is currently not running.")
-	} else {
-		let process = processes[0];
-		let cmd = process.cmd.split('"')[1]
-		let cwd = cmd.replace("LeagueClientUx.exe", "");
-		let fileData = fs.readFileSync(`${cwd}lockfile`, 'utf8');
-		let data = fileData.split(":");
-		let processName = data[0]
-		let processId = data[1]
-		let port = data[2]
-		let password = new Buffer(`riot:${data[3]}`).toString('base64')
-		let protocol = data[4]
-	}
+	startLeagueSearch();
 })();
+
+
+function startLeagueSearch() {
+	let interval = setInterval(async () => {
+		if (currentSession == null) {
+			let processes = await find('name', 'LeagueClientUx.exe');
+			if (processes.length === 0) {
+				console.log("League is currently not running.")
+			} else {
+				let process = processes[0];
+				let cmd = process.cmd.split('"')[1]
+				let cwd = cmd.replace("LeagueClientUx.exe", "");
+				let fileData = fs.readFileSync(`${cwd}lockfile`, 'utf8');
+				let data = fileData.split(":");
+				let password = new Buffer(`riot:${data[3]}`).toString('base64')
+				currentSession = new LeagueSession(data[0], data[1], data[2], password, data[4])
+			}
+		} else {
+			clearInterval(interval)
+		}
+	}, 10000)
+}
