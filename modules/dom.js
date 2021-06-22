@@ -4,7 +4,7 @@ class change {
   constructor() {
       this.autoacceptInt = false;
   }
-  
+
   updateProfile(summoner) {
     document.getElementById('profileImg').src = `http://ddragon.leagueoflegends.com/cdn/11.12.1/img/profileicon/${summoner.getIcon()}.png`;
     document.getElementById('profileUser').innerHTML = summoner.getNick();
@@ -20,7 +20,7 @@ class change {
     document.getElementById('profileXpLine').style = "width: " + (summoner.getXPLast() / summoner.getXPNext()) * 100 + "%";
     document.getElementById('statuss').value = summoner.getStatus();
   }
-  
+
   // Testing Purposes Only
   addAramEvent(api) {
     document.getElementById('aramBoost').addEventListener("click", () => {
@@ -70,6 +70,14 @@ class change {
 
         api.call("PUT", "me", {json: {"icon": ppp}});
     });
+  }
+
+  getMatchHistory(summoner, api) {
+  	document.getElementById("containerMatchHistory").addEventListener("click", () => {
+  		api.urlCall("GET", "/lol-career-stats/v1/summoner-games/" + summoner.getPuuid(), null, (data) => {
+			console.log(data)
+		})
+	})
   }
 
   removeLoader() {

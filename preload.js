@@ -44,6 +44,7 @@ const all = () => {
     dom.addStatusEvent(api);
     dom.addStatusTextEvent(api);
     dom.saveIcon(api);
+    dom.getMatchHistory(summoner, api);
 }
 
 window.addEventListener('DOMContentLoaded', () => {

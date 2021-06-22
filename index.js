@@ -128,7 +128,6 @@ app.on('activate', async () => {
 
 	const connector = new LCUConnector();
 	connector.on('connect', (data) => {
-		console.log(JSON.stringify(data))
 		currentSession = new LeagueSession(data.protocol, data.address, data.port, data.username, data.password)
 	})
 

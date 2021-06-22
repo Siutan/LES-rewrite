@@ -4,13 +4,15 @@ class summoner {
         this.nick = "Unnamed"; // Summoner Nickname
         this.level = 1; // SUmmoner Level
         this.xpnext = 1; // Xp Until Next Level
-        this.xplast = 0; // Xp Since Last Level 
+        this.xplast = 0; // Xp Since Last Level
         this.be = 0; // Blue Essence
         this.rp = 0; // Riot Points
         this.oe = 0; // Skins in loot
         this.rg = 0; // Gemstones
         this.ch = 0; // Chests
         this.ke = 0; // Chest Keys
+		this.region = "NA1"
+		this.puuid = ""
         this.status = "Status"; // Availability Status
     }
 
@@ -62,6 +64,14 @@ class summoner {
         return this.status;
     }
 
+    getPuuid() {
+    	return this.puuid;
+	}
+
+    getRegion() {
+    	return this.region
+	}
+
     updateSummoner(api) {
         api.call("GET", "currentSummoner", undefined, (data) => {
             if(!data) { return false; }
@@ -76,7 +86,13 @@ class summoner {
         api.call("GET", "me", undefined, (data) => {
             if(!data) { return false; }
             this.status = data.statusMessage;
+            this.puuid = data.puuid;
         });
+
+		api.call("GET", "region", undefined, (data) => {
+			if(!data) { return false; }
+			this.region = data.region;
+		});
 
         api.call("GET", "wallet", undefined, (data) => {
             if(!data) { return false; }

@@ -12,6 +12,8 @@ class routes {
             // DONT USE THIS "aramBoost": '/lol-login/v1/session/invoke?destination=lcdsServiceProxy&method=call&args=["","teambuilder-draft","activateBattleBoostV1",""]',
             "wallet": "/lol-store/v1/wallet", // blue essence and rp endpoint
             "loot": "/lol-loot/v2/player-loot-map", // loot endpoint
+			"region": "/riotclient/get_region_locale", // region endpoint
+			"matchHistory": "/lol-career-stats/v1/summoner-games/{puuid}"
         }
 
         this.protocol = this.protocol || protocol;
@@ -84,6 +86,39 @@ class routes {
             }
         }
     }
+
+	urlCall(method, url, args = undefined, callback) {
+		let options = {
+			url: this.getBaseUrl() + url,
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+				Authorization: this.getAuthHeader()
+			},
+			"rejectUnauthorized": false,
+			...args
+		}
+		switch(method) {
+			case "GET": {
+				request.get(options, (_, __, back) => {
+					back = JSON.parse(back);
+
+					if(typeof callback == "function") {
+						if(!back) {
+							return callback(false);
+						}
+						callback(back);
+					}
+				});
+			}
+			case "PUT": {
+				request.put(options);
+			}
+			case "POST": {
+				request.post(options);
+			}
+		}
+	}
 }
 
 module.exports = routes
