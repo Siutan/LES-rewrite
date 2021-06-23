@@ -50,13 +50,15 @@ const createMainWindow = async () => {
 		height: 720,
 		minWidth: 720,
 		minHeight: 480,
-		frame: false,
+		frame: true,
+		fullscreen: false,
 		webPreferences: {
 			preload: path.join(__dirname, 'preload.js'),
 			nodeIntegration: true,
 			contextIsolation: false
 		}
 	});
+	win.removeMenu();
 	win.on('ready-to-show', () => {
 		win.show();
 	});
@@ -68,29 +70,6 @@ const createMainWindow = async () => {
 	});
 
 	await win.loadFile(path.join(__dirname, 'index.html'));
-
-	// CLOSE APP
-	ipc.on('closeApp', () => {
-		console.log('close btn clicked');
-		win.close();
-	});
-
-	// MINIMIZE APP
-	ipc.on('min', () => {
-		console.log('minimize btn clicked');
-		win.minimize();
-	});
-
-	// MAXIMIZE APP
-	ipc.on('maximizeRestoreApp', () => {
-		if (win.isMaximized()) {
-			console.log('restore btn clicked');
-			win.restore();
-		} else {
-			console.log('maximize btn clicked');
-			win.maximize();
-		}
-	});
 	return win;
 };
 

@@ -49,7 +49,7 @@ const all = () => {
 
 window.addEventListener('DOMContentLoaded', () => {
     var updateProfile = false;
-    var eeeezdWait = setInterval(() => {
+    var wait = setInterval(() => {
         if (clientFound) {
             dom.removeLoader();
 

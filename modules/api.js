@@ -13,7 +13,7 @@ class routes {
             "wallet": "/lol-store/v1/wallet", // blue essence and rp endpoint
             "loot": "/lol-loot/v2/player-loot-map", // loot endpoint
 			"region": "/riotclient/get_region_locale", // region endpoint
-			"matchHistory": "/lol-career-stats/v1/summoner-games/{puuid}"
+			"matchHistory": "/lol-career-stats/v1/summoner-games/{puuid}" // Get games of logged in summoner
         }
 
         this.protocol = this.protocol || protocol;
